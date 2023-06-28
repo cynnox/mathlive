@@ -204,7 +204,8 @@ export function delegateKeyboardEvents(
   let blurInProgress = false;
 
   const controller = new AbortController();
-  const signal = controller.signal;
+  // commented signalfunction from abortcontroller to have support in angular
+  // const signal = controller.signal;
 
   keyboardSink.addEventListener(
     'keydown',
@@ -227,7 +228,9 @@ export function delegateKeyboardEvents(
         keydownEvent = null;
       else keyboardSink.textContent = '';
     },
-    { capture: true, signal }
+    // { capture: true, signal } commented second argument to have support in amgular
+
+    { capture: true }
   );
 
   keyboardSink.addEventListener(
@@ -241,7 +244,9 @@ export function delegateKeyboardEvents(
 
       keypressEvent = event;
     },
-    { capture: true, signal }
+    // { capture: true, signal } commented second argument to have support in amgular
+
+    { capture: true }
   );
 
   keyboardSink.addEventListener(
@@ -252,7 +257,9 @@ export function delegateKeyboardEvents(
 
       delegate.onCompositionStart(event.data);
     },
-    { capture: true, signal }
+    // { capture: true, signal } commented second argument to have support in amgular
+
+    { capture: true }
   );
 
   keyboardSink.addEventListener(
@@ -262,7 +269,9 @@ export function delegateKeyboardEvents(
 
       delegate.onCompositionUpdate(ev.data);
     },
-    { capture: true, signal }
+    // { capture: true, signal } commented second argument to have support in amgular
+
+    { capture: true }
   );
 
   keyboardSink.addEventListener(
@@ -274,13 +283,17 @@ export function delegateKeyboardEvents(
       compositionInProgress = false;
       delegate.onCompositionEnd(ev.data);
     },
-    { capture: true, signal }
+    // { capture: true, signal } commented second argument to have support in amgular
+
+    { capture: true }
   );
 
   keyboardSink.addEventListener(
     'beforeinput',
     (ev) => ev.stopImmediatePropagation(),
-    { signal }
+    // {  signal } commented to have support in angular
+
+    {}
   );
 
   // The `input` events is dispatched when the field is changed,
@@ -312,7 +325,9 @@ export function delegateKeyboardEvents(
       ev.preventDefault();
       ev.stopPropagation();
     },
-    { signal }
+    // {  signal } commented to have support in angular
+
+    {}
   );
 
   keyboardSink.addEventListener(
@@ -325,17 +340,22 @@ export function delegateKeyboardEvents(
       if (!delegate.onPaste(event)) event.preventDefault();
       event.stopImmediatePropagation();
     },
-    { signal }
+    // {  signal } commented to have support in angular
+
+    {}
   );
 
   keyboardSink.addEventListener('cut', (ev) => delegate.onCut(ev), {
+    // capture: true, commented second parameter for support of angular
+    // signal,
+
     capture: true,
-    signal,
   });
 
   keyboardSink.addEventListener('copy', (ev) => delegate.onCopy(ev), {
+    // capture: true, commented second parameter for support of angular
+    // signal,
     capture: true,
-    signal,
   });
 
   keyboardSink.addEventListener(
@@ -377,7 +397,8 @@ export function delegateKeyboardEvents(
       delegate.onBlur();
       blurInProgress = false;
     },
-    { capture: true, signal }
+    // {capture: true, signal} commented second parameter for support of angular
+    { capture: true }
   );
 
   keyboardSink.addEventListener(
@@ -390,7 +411,9 @@ export function delegateKeyboardEvents(
 
       focusInProgress = false;
     },
-    { capture: true, signal }
+        // {capture: true, signal} commented second parameter for support of angular
+
+    { capture: true }
   );
 
   return {

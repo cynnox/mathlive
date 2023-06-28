@@ -1003,7 +1003,10 @@ function handlePointerDown(ev: PointerEvent) {
   if (ev.button !== 0) return;
 
   const keyboard = VirtualKeyboard.singleton;
+  console.log('inside handlepointerDowns');
+
   if (!keyboard) return;
+  console.log('returned hereeeeeeeeeeeeeeeeee at ev,preventDefault');
 
   //
   // Is this event for a layer switch
@@ -1013,8 +1016,11 @@ function handlePointerDown(ev: PointerEvent) {
   while (layerButton && !layerButton.getAttribute('data-layer'))
     layerButton = layerButton.parentElement;
   if (layerButton) {
+    console.log('working here under do while loop');
+
     keyboard.currentLayer = layerButton.getAttribute('data-layer') ?? '';
     ev.preventDefault();
+
     return;
   }
 
@@ -1038,27 +1044,25 @@ function handlePointerDown(ev: PointerEvent) {
     'pointerenter',
     handleVirtualKeyboardEvent(controller),
     {
-      capture: true,
-      signal: controller.signal,
+      capture: true
     }
   );
   target.addEventListener(
     'pointerleave',
     handleVirtualKeyboardEvent(controller),
     {
-      capture: true,
-      signal: controller.signal,
+      capture: true
     }
   );
   target.addEventListener(
     'pointercancel',
     handleVirtualKeyboardEvent(controller),
     {
-      signal: controller.signal,
+      
     }
   );
   target.addEventListener('pointerup', handleVirtualKeyboardEvent(controller), {
-    signal: controller.signal,
+  
   });
 
   // Is it the Shift key?
@@ -1073,8 +1077,16 @@ function handlePointerDown(ev: PointerEvent) {
       if (target!.classList.contains('is-pressed')) {
         target!.classList.remove('is-pressed');
         target!.classList.add('is-active');
-        if (ev.target && 'releasePointerCapture' in ev.target)
-          (ev.target as HTMLElement).releasePointerCapture(ev.pointerId);
+        try {
+          // field.releasePointerCapture(evt.pointerId);
+          if (ev.target && 'releasePointerCapture' in ev.target)
+            (ev.target as HTMLElement).releasePointerCapture(ev.pointerId);
+        } catch (err) {
+          console.log('utills.ts');
+
+          console.error(err);
+        }
+
         showVariantsPanel(target!, () => {
           controller.abort();
           target?.classList.remove('is-active');

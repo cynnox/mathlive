@@ -313,7 +313,10 @@ export function showVariantsPanel(
       onClose?.();
       ev.preventDefault();
     },
-    { capture: true, passive: false, signal: variantPanelController.signal }
+    //  commented for dependency support in angular
+      //  { capture: true, passive: false, signal: variantPanelController.signal }
+
+    { capture: true, passive: false }
   );
 
   variantPanel.addEventListener(
@@ -324,7 +327,9 @@ export function showVariantsPanel(
 
       target.classList.add('is-active');
     },
-    { capture: true, signal: variantPanelController.signal }
+     //  commented for dependency support in angular
+      //  { capture: true, passive: false, signal: variantPanelController.signal }
+    { capture: true }
   );
 
   variantPanel.addEventListener(
@@ -335,7 +340,9 @@ export function showVariantsPanel(
 
       target.classList.remove('is-active');
     },
-    { capture: true, signal: variantPanelController.signal }
+     //  commented for dependency support in angular
+      //  { capture: true, passive: false, signal: variantPanelController.signal }
+    { capture: true}
   );
 
   window.addEventListener(
@@ -344,8 +351,10 @@ export function showVariantsPanel(
       hideVariantsPanel();
       onClose?.();
     },
-    { signal: variantPanelController.signal }
-  );
+     //  commented for dependency support in angular
+  //    { signal: variantPanelController.signal }
+
+   );
 
   window.addEventListener(
     'pointerup',
@@ -353,7 +362,8 @@ export function showVariantsPanel(
       hideVariantsPanel();
       onClose?.();
     },
-    { signal: variantPanelController.signal }
+         //  commented for dependency support in angular
+  //    { signal: variantPanelController.signal }
   );
 
   //

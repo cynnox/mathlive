@@ -276,9 +276,13 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
   private static _singleton: VirtualKeyboard | null;
   static get singleton(): VirtualKeyboard | null {
     if (this._singleton === undefined) {
+      console.log("checking wheather keyboard exist");
+      
       try {
-        this._singleton = new VirtualKeyboard();
+        this._singleton = new VirtualKeyboard();         
       } catch (e) {
+        console.error(e);
+        
         this._singleton = null;
       }
     }
@@ -444,7 +448,9 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
   }
 
   /** Update the keycaps to account for the current state */
-  render(): void {
+  render(): void { 
+   
+    
     if (!this._element) return;
 
     // If there's a container, hide the default backdrop
@@ -601,6 +607,9 @@ export class VirtualKeyboard implements VirtualKeyboardInterface, EventTarget {
   }
 
   handleEvent(evt: Event): void {
+ 
+    
+    
     if (isVirtualKeyboardMessage(evt)) {
       if (!validateOrigin(evt.origin, this.originValidator)) {
         throw new DOMException(

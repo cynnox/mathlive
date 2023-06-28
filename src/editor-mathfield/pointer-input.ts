@@ -49,8 +49,16 @@ export function onPointerDown(
         endPointerTracking as EventListener
       );
       if (evt instanceof PointerEvent)
-        field.releasePointerCapture(evt.pointerId);
-    } else {
+
+try{
+  field.releasePointerCapture(evt.pointerId);
+
+}catch(err){
+  console.log("pinter-inputs");
+  
+  console.error(err);
+}  
+  } else {
       off(window, 'mousemove', onPointerMove);
       off(window, 'mouseup blur', endPointerTracking as EventListener);
     }

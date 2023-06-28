@@ -346,23 +346,33 @@ If you are using Vue, this may be because you are using the runtime-only build o
     this.field.addEventListener(
       'click',
       (evt) => evt.stopImmediatePropagation(),
-      { capture: false, signal: this.eventController.signal }
+      { capture: false }
+      //  removed due to angular not
+      //  supporting sinnal event from abort controller   
+      //    { capture: false, signal: this.eventController.signal }
+
     );
 
     // Listen to 'wheel' events to scroll (horizontally) the field when it overflows
     this.field.addEventListener('wheel', this, {
       passive: false,
-      signal: this.eventController.signal,
+      //  removed due to angular not
+      //  supporting signal event from abort controller   
+      //    { passive: false, signal: this.eventController.signal }
     });
 
     // Delegate pointer events
     if ('PointerEvent' in window) {
       this.field.addEventListener('pointerdown', this, {
-        signal: this.eventController.signal,
+         //  removed due to angular not
+      //  supporting signal event from abort controller   
+      //    { signal: this.eventController.signal }
       });
     } else {
       this.field.addEventListener('mousedown', this, {
-        signal: this.eventController.signal,
+        // removed due to angular not
+        //  supporting signal event from abort controller   
+        //    { signal: this.eventController.signal }
       });
     }
 
@@ -378,7 +388,9 @@ If you are using Vue, this may be because you are using the runtime-only build o
             window.mathVirtualKeyboard.update(makeProxy(this));
           }
         },
-        { signal: this.eventController.signal }
+           // removed due to angular not
+        //  supporting signal event from abort controller   
+        //    { signal: this.eventController.signal }
       );
 
     this.ariaLiveText = this.element.querySelector('[role=status]')!;
@@ -396,10 +408,14 @@ If you are using Vue, this may be because you are using the runtime-only build o
     // switched from portrait to landscape or the document is scrolled
     // to adjust the UI (popover, etc...)
     window.addEventListener('resize', this, {
-      signal: this.eventController.signal,
+         // removed due to angular not
+        //  supporting signal event from abort controller   
+        //    { signal: this.eventController.signal }
     });
     document.addEventListener('scroll', this, {
-      signal: this.eventController.signal,
+         // removed due to angular not
+        //  supporting signal event from abort controller   
+        //    { signal: this.eventController.signal }
     });
 
     window.mathVirtualKeyboard.addEventListener(
@@ -433,7 +449,9 @@ If you are using Vue, this may be because you are using the runtime-only build o
     if (this.connectedToVirtualKeyboard) return;
     this.connectedToVirtualKeyboard = true;
     window.addEventListener('message', this, {
-      signal: this.eventController.signal,
+         // removed due to angular not
+        //  supporting signal event from abort controller   
+        //    { signal: this.eventController.signal }
     });
     // Connect the kbd or kbd proxy to the current window
     window.mathVirtualKeyboard.connect();
@@ -1499,7 +1517,8 @@ If you are using Vue, this may be because you are using the runtime-only build o
     // Wait for the window/document visibility to change
     // (the mathfield gets blurred before the window)
     const controller = new AbortController();
-    const signal = controller.signal;
+    // const signal = controller.signal;  commented for dependency support in angular
+
     document.addEventListener(
       'visibilitychange',
       () => {
@@ -1517,7 +1536,9 @@ If you are using Vue, this may be because you are using the runtime-only build o
           );
         }
       },
-      { once: true, signal }
+      // { once: true, signal } for dependency support in angular
+
+      { once: true }
     );
 
     // If we haven't received a visibility change after a short delay,
